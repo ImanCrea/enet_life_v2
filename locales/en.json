@@ -1,0 +1,47 @@
+{
+    "authentication": {
+        "login_title": "Se connecter",
+        "username": "Enter username",
+        "required_field": "Required field",
+        "password": "Enter password",
+        "sign_in": "Sign In",
+        "forget_password_title": "Mot de passe oublié",
+        "forget_password": "Forget password ?",
+        "reset_password": "Reset password",
+        "network_error": "Unable to get login information",
+        "access_error": "Incorrect login or password",
+        "log_out": "Log out",
+        "start": "Commencer",
+        "next": "Suivant",
+        "no_account": "Aucun compte ?",
+        "email_label": "Phone number",
+        "phone_placeholder": "Rensignez votre numéro"
+    },
+    "home": {
+        "menu_label": "Home",
+        "evaluation": "Dernières notes",
+        "nextEvaluation": "Prochaines évaluations",
+        "empty_note": "Aucune note pour le moment"
+    },
+    "evaluation": {
+        "menu_label": "Note"
+    },
+    "schooling": {
+        "menu_label": "Scolarité"
+    },
+    "calendar": {
+        "menu_label": "EDT"
+    },
+    "drawer": {
+        "profile": "Profil",
+        "settings": "Settings"
+    },
+    "snackBar": {
+        "sb_succes_save": "Successful registration",
+        "sb_error": "Connection Problem with database"
+    },
+    "systemTranslation": {
+        "tab_nav_more": "More",
+        "features_not_available": "Available soon"
+    }
+}

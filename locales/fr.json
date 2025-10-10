@@ -1,0 +1,131 @@
+{
+    "authentication": {
+        "login_title": "Se connecter",
+        "username_label": "Identifiant",
+        "username_placeholder": "Renseignez votre identifiant",
+        "required_field": "Champ requis",
+        "email_required_field": "Email incorrect",
+        "password_label": "Mot de passe",
+        "password_place": "Renseignez votre mot de passe",
+        "sign_in": "Se connecter",
+        "forget_password_title": "Mot de passe oublié",
+        "forget_password": "Mot de passe oublié ?",
+        "reset_password": "Demande de réinitialisation",
+        "network_error": "Problème de connexion serveur",
+        "access_error": "Nom d'utilisateur ou mot de passe incorrect",
+        "log_out": "Se déconnecter",
+        "start": "Commencer",
+        "next": "Suivant",
+        "no_account": "Aucun compte ?",
+        "sign_up": "Inscrivez-vous",
+        "phone_label": "Numéro de téléphone",
+        "phone_placeholder": "Rensignez votre numéro",
+        "validate": "J'accepte les termes"
+    },
+    "home": {
+        "tabs_label": "Accueil",
+
+        "evaluation": "Dernières notes",
+        "nextEvaluation": "Prochaines évaluations",
+        "evaluation_time": "Heure",
+        "evaluation_title": "Evaluation(s)",
+        "balance_title": "Solde de la scolarité",
+        "recent_payment": "Paiement recent",
+        "absence_late": "Absences et retards",
+        "more_note": "Consulter",
+        "more_schooling_payment": "Consulter tous les paiments",
+        "empty_note": "Aucune note pour le moment",
+        "empty_evaluation": "Aucune évaluation pour le moment",
+        "empty_absence": "Aucune absence pour le moment",
+        "payment_list": "Liste des paiements",
+        "more_menu": "Plus"
+    },
+    "eval": {
+        "tabs_label": "Note",
+
+        "date": "Date",
+        "subject": "Matière",
+        "empty_note": "Aucune note pour le moment",
+        "note_student": "Note élève :",
+        "up_note": "Note + :",
+        "down_note": "Note - :",
+        "noteDay_label": "Note du "
+    },
+    "tuition": {
+        "tabs_label": "Scolarité",
+
+        "currency": "CFA",
+        "payment": "Paiement",
+        "deadline": "Echéancier",
+        "balanceText": "Reste à payer :",
+        "tuitionAmount": "Montant scolarité",
+        "totalPayment": "Total paiement",
+        "totalReduction": "Total réduction",
+        "empty_payment": "Aucun paiement pour le moment",
+        "tuition": "Scolarité",
+        "canteen": "Cantine",
+        "transport": "Transport",
+        "deadlineTitle": "Montant frais de ",
+        "empty_deadline": "Aucun échéancier défini",
+        "amount": "Montant",
+        "payment_history": "Historique de paiement"
+    },
+    "calendar": {
+        "tabs_label": "Emploi du temps",
+
+        "empty_edt": "Aucun emploi du temps défini",
+        "pdf_edt": "EDT en PDF",
+        "period": "Période"
+    },
+    "more": {
+        "tabs_label": "Plus",
+
+        "absence": "Absence",
+        "text_mat_absence": "au cours de",
+        "average": "Moyenne",
+        "bulletin": "Bulletin",
+        "teachers": "Equipe pédagogique",
+        "empty_average": "Aucune note pour le moment",
+        "average_base": "Moyenne sur",
+        "average_student": "Moyenne élève :",
+        "average_class": "Moyenne classe :",
+        "up_average": "Moyenne + :",
+        "down_average": "Moyenne - :",
+        "student_rank": "Rang :",
+        "empty_reportCard": "Aucun bulletin disponible pour le moment",
+        "report_text": "Bulletin de notes"
+    },
+    "drawer": {
+        "profile": "Profil",
+        "settings": "Parametres",
+        "contract": "Contrat Sunu"
+    },
+    "advertising":  {
+        "modal_title": "CADEAU BONUS !",
+        "agreementTitle": "C’est génial! J’accepte",
+        "denyAgreementText": "Je ne suis pas interessé",
+        "registration_title": "Souscription à BELEMI ENET",
+        "validate_registration": "Valider mes informations",
+        "last_name_label": "Nom",
+        "last_name_placeholder": "Renseignez le nom",
+        "first_name_label": "Prénom",
+        "first_name_placeholder": "Renseignez le prénom",
+        "email_label": "Email",
+        "email_placeholder": "Renseignez l'email",
+        "birth_date_label": "Date de naissance",
+        "lieu_date_label": "Lieu de naissance",
+        "birth_date_placeholder": "Renseignez la date de naissance",
+        "phone1_label": "Numéro téléphone",
+        "phone_placeholder": "Renseignez le numéro téléphone",
+        "giftText": "BELEMI ENET permet de garantir les frais de scolarité de l’élève ou l’étudiant en cas de disparition d’un parent",
+        "partner_advertising": "Vos informations seront transmises à notre partenaire SUNU"
+    },
+    "snackBar": {
+        "sb_succes_save": "Succès de l'enregistrement",
+        "sb_error" : "Problème de connection BD"
+    },
+    "systemTranslation": {
+        "features_not_available": "Disponible bientôt",
+        "connexion_issue": "Impossible de se connecter à internet"
+    }
+}
