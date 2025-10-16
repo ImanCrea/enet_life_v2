@@ -5,6 +5,11 @@ export default {
     logoEnet: require('../assets/logo_enet_witout_bl.png'),
     headerBackground: require('../assets/background-bulle.png'),
     avatar: require('../assets/avatar.png'),
+    backLastEvaluation: require('../assets/back-note-home.png'),
+    schoolingBalance: require('../assets/schooling-balance.png'),
+    backgroundImageAbsence: require('../assets/back_absence.png'),
+    absenceIcon: require('../assets/absence-icon.png'),
+    lateIcon: require('../assets/in-late.png'),
     //logo: require('../assets/logo.png'),
     /*
     onBoardingOne: require('../assets/first.png'),
@@ -17,10 +22,8 @@ export default {
     //headerBackground: require('../assets/background-header.png'),
     headerBackground: require('../assets/background-bulle.png'),
     backLastEvaluation: require('../assets/back-note-home.png'),
-    schoolingBalance: require('../assets/schooling-balance.png'),
+
     imageTuitionBalance: require('../assets/image-payment.png'),
-    backgroundImageAbsence: require('../assets/back_absence.png'),
-    absenceIcon: require('../assets/absence-icon.png'),
-    lateIcon: require('../assets/in-late.png'),
+
     advertisingImage: require('../assets/advertising.png'),*/
 };

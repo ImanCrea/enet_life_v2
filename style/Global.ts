@@ -48,5 +48,5 @@ export const globalStyles = StyleSheet.create({
         fontWeight: '700',
         color: COLORS.gray,
         marginLeft: 5,
-    }
+    },
 });

@@ -7,6 +7,8 @@ import {
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import userReducer from './features/userSlice';
+import languageReducer from "./features/language/languageSlice";
+import studentReducer from './features/student/studentSlice';
 
 const persistConfig = {
     key: 'root',
@@ -16,6 +18,8 @@ const persistConfig = {
 
 const reducer = combineReducers({
     user: userReducer,
+    language: languageReducer,
+    student: studentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

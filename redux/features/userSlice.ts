@@ -13,10 +13,16 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         loginUser: (state, action) => {
+            state.user = action.payload.user;
+            state.isLoggedIn = true;
+            state.onBoardingStatus = false;
+            state.userToken = action.payload.token;
         },
         logoutUser: () => {
+            return initialState;
         },
         setOnBoardingStatus: state => {
+            state.onBoardingStatus = false;
         },
     },
 });

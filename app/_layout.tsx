@@ -1,27 +1,20 @@
 import {ReduxProvider} from "../redux/provider";
 import {Stack, useRouter} from "expo-router";
 import i18next from '../i18next/i18next';
-import { I18nextProvider } from 'react-i18next';
+import {I18nextProvider, useTranslation} from 'react-i18next';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import React, {useEffect} from "react";
+import {useSelector} from "react-redux";
+import AppNav from "./AppNav";
 
 const RootLayout = () => {
-    const userToken = false;
+    const userTokenStatus = false;
+
 
     return (
         <ReduxProvider>
             <I18nextProvider i18n={i18next}>
-                <GestureHandlerRootView style={{flex: 1}}>
-                    <Stack>
-                        <Stack.Protected guard={userToken}>
-                            <Stack.Screen name="(drawer)" options={{headerShown: false}} />
-                        </Stack.Protected>
-                        <Stack.Protected guard={!userToken}>
-                            <Stack.Screen name="index" options={{ headerShown: false, title: 'OnBoarding' }} />
-                            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                        </Stack.Protected>
-                    </Stack>
-                </GestureHandlerRootView>
-
+                <AppNav />
             </I18nextProvider>
         </ReduxProvider>
     );

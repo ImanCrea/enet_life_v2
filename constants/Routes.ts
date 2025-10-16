@@ -6,10 +6,11 @@ export default {
 
 
     TAB_HOME: 'home',
-    TAB_EVAL: 'eval/index',
-    TAB_TUITION: 'tuition/index',
+    TAB_EVAL: 'eval',
+    TAB_TUITION: 'tuition',
     TAB_CALENDAR: 'edt/index',
-    TAB_MORE: 'more/index',
+    TAB_MORE: 'more',
+    //TAB_MORE: 'more/index',
 
     TAB_HEAD_TUITION_PAYMENT: 'TAB_HEAD_TUITION_PAYMENT',
     TAB_HEAD_TUITION_DEADLINE: 'TAB_HEAD_TUITION_DEADLINE',

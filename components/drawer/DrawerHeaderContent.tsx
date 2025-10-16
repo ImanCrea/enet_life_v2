@@ -7,11 +7,55 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import DrawerHeaderItem from "./DrawerHeaderItem";
 import {useTranslation} from "react-i18next";
 import {globalStyles} from "../../style/Global";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {changeChild, initializeChildValue} from "../../redux/features/student/studentSlice";
+import {DrawerActions} from "@react-navigation/native";
+import {logoutUser, setOnBoardingStatus} from "../../redux/features/userSlice";
 
 const DrawerHeaderContent = (props) => {
     const colorScheme = useColorScheme();
     const theme = COLORS[colorScheme] ?? COLORS.light;
     const {t} = useTranslation();
+    //const navigation = useNavigation();
+    const {navigation} = props;
+
+    const [studentsList, setStudentsList] = useState(false);
+    const dispatch = useDispatch();
+    const {students, selectedStudent} = useSelector(
+        (state: any) => state.student,
+    );
+    const [studentsData, setStudentsData] = useState<any>([]);
+    const {user} = useSelector((state: any) => state.user);
+    const BASEURL = user?.urlplateforme;
+
+    const handleIconChange = () => {
+        setStudentsList(!studentsList);
+    };
+
+    const handleStudentChange = (studentSelected: any) => {
+        dispatch(changeChild(studentSelected));
+        navigation.dispatch(DrawerActions.closeDrawer());
+    };
+
+    const onLogout = () => {
+        navigation.dispatch(DrawerActions.closeDrawer());
+        dispatch(initializeChildValue());
+        dispatch(logoutUser());
+        //dispatch(setOnBoardingStatus());
+    };
+
+    useEffect(() => {
+        const fetchData = () => {
+            if (students.length > 0 && selectedStudent !== null) {
+                const siblings = students.filter(
+                    (child: any) => child?.idelev !== selectedStudent?.idelev,
+                );
+                setStudentsData(siblings);
+            }
+        };
+        fetchData();
+    }, [students, selectedStudent]);
 
     return (
         <DrawerContentScrollView {...props} style={{flex: 1}}>
@@ -64,7 +108,7 @@ const DrawerHeaderContent = (props) => {
                     <MaterialIcons name="logout" size={26} color={theme.drawerIconColor} /> as any
                 )}
                 labelStyle={globalStyles.drawerLinkItem}
-                onPress={() => {}}
+                onPress={() => onLogout()}
             />
 
         </DrawerContentScrollView>

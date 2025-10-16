@@ -24,9 +24,11 @@
     },
     "home": {
         "tabs_label": "Accueil",
-
         "evaluation": "Dernières notes",
+        "empty_note": "Aucune note pour le moment",
         "nextEvaluation": "Prochaines évaluations",
+
+
         "evaluation_time": "Heure",
         "evaluation_title": "Evaluation(s)",
         "balance_title": "Solde de la scolarité",
@@ -34,7 +36,7 @@
         "absence_late": "Absences et retards",
         "more_note": "Consulter",
         "more_schooling_payment": "Consulter tous les paiments",
-        "empty_note": "Aucune note pour le moment",
+
         "empty_evaluation": "Aucune évaluation pour le moment",
         "empty_absence": "Aucune absence pour le moment",
         "payment_list": "Liste des paiements",
@@ -42,14 +44,14 @@
     },
     "eval": {
         "tabs_label": "Note",
-
+        "noteDay_label": "Note du ",
         "date": "Date",
+
         "subject": "Matière",
         "empty_note": "Aucune note pour le moment",
         "note_student": "Note élève :",
         "up_note": "Note + :",
         "down_note": "Note - :",
-        "noteDay_label": "Note du "
     },
     "tuition": {
         "tabs_label": "Scolarité",
@@ -79,10 +81,12 @@
     },
     "more": {
         "tabs_label": "Plus",
-
         "absence": "Absence",
-        "text_mat_absence": "au cours de",
         "average": "Moyenne",
+
+
+        "text_mat_absence": "au cours de",
+
         "bulletin": "Bulletin",
         "teachers": "Equipe pédagogique",
         "empty_average": "Aucune note pour le moment",

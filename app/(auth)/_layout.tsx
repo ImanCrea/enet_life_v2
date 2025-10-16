@@ -12,13 +12,13 @@ export default function AuthLayout() {
                     animation: "none"
                 }}
             >
-                <Stack.Screen
+                {/*<Stack.Screen
                     name="policy"
                     options={{
                         //headerShown: true,
                         title: 'Policy'
                     }}
-                />
+                />*/}
                 <Stack.Screen
                     name="login"
                     options={{

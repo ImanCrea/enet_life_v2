@@ -4,16 +4,21 @@ import LoginForm from "../../components/form/LoginForm";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Link} from "expo-router";
+import AuthenticationService from "../../service/AuthenticationService";
+import {generateToken} from "../../utils/utilities";
+import {loginUser} from "../../redux/features/userSlice";
+import {useDispatch} from "react-redux";
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [buttonStatus, setButtonStatus] = useState(false);
     const {t} = useTranslation();
+    const dispatch = useDispatch();
 
     const onSubmit = async (data: any) => {
         try {
             setButtonStatus(true);
-            /*const response = await AuthenticationService.authenticateUser(data);
+            const response = await AuthenticationService.authenticateUser(data);
             const token = generateToken(
                 response.data?.user?.idcompteclient,
                 response.data?.user?.pseudocpte,
@@ -23,7 +28,7 @@ const Login = () => {
                 token: token,
             };
             dispatch(loginUser(userInfo));
-            dispatch(getUserChildren({studentList: response.data?.studentList}));*/
+            //dispatch(getUserChildren({studentList: response.data?.studentList}));
             setButtonStatus(false);
         }
         catch (error) {

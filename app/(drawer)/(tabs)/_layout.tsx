@@ -15,7 +15,6 @@ export default function TabsLayout() {
         <>
             <Tabs
                 screenOptions={{
-                    //headerShown: false,
                     tabBarActiveTintColor: theme.tabIconColorFocused,
                     tabBarInactiveTintColor: theme.tabIconColor,
                     tabBarStyle: {
@@ -24,16 +23,6 @@ export default function TabsLayout() {
                         paddingBottom: 6,
                         height: 75,
                     },
-                    /*headerBackground:() => (
-                        <View style={styles.container}>
-                            <Image
-                                style={styles.image}
-                                source={IMAGES.headerBackground}
-                                contentFit="cover"
-                                transition={1000}
-                            />
-                        </View>
-                    ) as any,*/
                 }}
             >
                 <Tabs.Screen
@@ -121,6 +110,7 @@ export default function TabsLayout() {
                     options={{
                         title: `${t('more.tabs_label')}`,
                         headerTintColor: theme.tabIconColorFocused,
+                        headerShown: false,
                         tabBarIcon: ({ focused }) => (
                             <MaterialIcons
                                 size={28}
@@ -128,11 +118,6 @@ export default function TabsLayout() {
                                 color={focused ? theme.tabIconColorFocused : theme.tabIconColor }
                             /> as any
                         ),
-                        header: () => {
-                            return (
-                                <CustomHeader title={t('more.tabs_label')} />
-                            ) as any;
-                        },
                     }}
                 />
             </Tabs>

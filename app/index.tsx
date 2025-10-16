@@ -5,6 +5,7 @@ import {StatusBar} from "expo-status-bar";
 import {SafeAreaView} from "react-native-safe-area-context";
 import Spacer from "../components/ui/Spacer";
 import {useRouter} from "expo-router";
+import ViewThemed from "../components/ui/ViewThemed";
 
 const {width, height} = Dimensions.get('window');
 const slides = [
@@ -54,13 +55,13 @@ const OnBoardingScreen = ({navigation}) => {
 
     const Footer = () => {
         return (
-            <View style={{
+            <ViewThemed style={{
                 height: height * 0.25,
                 justifyContent: 'space-between',
                 paddingHorizontal: 20,
                 //backgroundColor: 'yellow',
             } as StyleSheet}>
-                <View style={{
+                <ViewThemed style={{
                     flexDirection: 'row',
                     justifyContent: 'center',
                     marginTop: 20,
@@ -71,9 +72,9 @@ const OnBoardingScreen = ({navigation}) => {
                             width: 25,
                         }]} />
                     ))}
-                </View>
+                </ViewThemed>
                 <Spacer height={40} />
-                <View style={{ flex: 1, marginBottom: 20}}>
+                <ViewThemed style={{ flex: 1, marginBottom: 20}}>
                     {currentSlideIndex === slides.length - 1 ? (
                         <View style={{height: 55}}>
                             <TouchableOpacity style={[styles.btn]} onPress={() => router.push('/policy')}>
@@ -81,32 +82,32 @@ const OnBoardingScreen = ({navigation}) => {
                             </TouchableOpacity>
                         </View>
                     ) : (
-                        <View style={{flexDirection: 'row', alignItems: 'flex-end'} as StyleSheet}>
+                        <ViewThemed style={{flexDirection: 'row', alignItems: 'flex-end'} as StyleSheet}>
                             {/*<TouchableOpacity
-                            style={[
-                                styles.btn,
-                                {
-                                    backgroundColor: 'transparent',
-                                    borderWidth: 1,
-                                    borderColor: COLORS.primary,
-                                }
-                            ]}
-                            onPress={skip}
-                        >
-                            <Text style={{
-                                color: COLORS.primary,
-                                fontWeight: 'bold',
-                                fontSize: 15,
-                            } as StyleSheet}>SKIP</Text>
-                        </TouchableOpacity>
-                        <View style={{width: 20}} />*/}
+                                style={[
+                                    styles.btn,
+                                    {
+                                        backgroundColor: 'transparent',
+                                        borderWidth: 1,
+                                        borderColor: COLORS.primary,
+                                    }
+                                ]}
+                                onPress={skip}
+                            >
+                                <Text style={{
+                                    color: COLORS.primary,
+                                    fontWeight: 'bold',
+                                    fontSize: 15,
+                                } as StyleSheet}>SKIP</Text>
+                            </TouchableOpacity>
+                            <View style={{width: 20}} />*/}
                             <TouchableOpacity style={[styles.btn]} onPress={goNextSlide}>
                                 <Text style={styles.btnText}>Suivant</Text>
                             </TouchableOpacity>
-                        </View>
+                        </ViewThemed>
                     )}
-                </View>
-            </View>
+                </ViewThemed>
+            </ViewThemed>
         )
     }
 
@@ -134,7 +135,7 @@ const OnBoardingScreen = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
             <StatusBar value="auto" />
-            <View>
+            <ViewThemed>
                 <FlatList
                     ref={flatListRef}
                     onMomentumScrollEnd={updateCurrentSlideIndex}
@@ -146,7 +147,7 @@ const OnBoardingScreen = ({navigation}) => {
                     renderItem={({item}) => <Slide item={item} />}
                 />
                 <Footer />
-            </View>
+            </ViewThemed>
         </SafeAreaView>
     );
 };
