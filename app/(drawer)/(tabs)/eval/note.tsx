@@ -9,23 +9,25 @@ import {useSelector} from "react-redux";
 import NoteItem from "../../../../components/ui/note/NoteItem";
 import Loading from "../../../../components/ui/Loading";
 import {useLocalSearchParams} from "expo-router";
+import NoteService from "../../../../service/NoteService";
+import {checkAppState} from "../../../../utils/utilities";
 
 const Note = () => {
     const [notesList, setNotesList] = useState<TNote[]>([]);
-    //const {selectedStudent} = useSelector((state: any) => state.student);
+    const {selectedStudent} = useSelector((state: any) => state.student);
     const [loading, setLoading] = useState(true);
     const {user} = useSelector((state: any) => state.user);
     const universe_db = user?.main;
     const [count, setCount] = useState(0);
     const appState = useRef(AppState.currentState);
     const {t} = useTranslation();
-    const { periodChoose } = useLocalSearchParams();
+    const {selectedPeriodId} = useLocalSearchParams();
 
     useEffect(() => {
-        console.log(periodChoose);
-        /*const fetchData = async () => {
+        const fetchData = async () => {
             setLoading(true);
-            if (selectedStudent !== null && periodChoose !== null) {
+            if (selectedStudent !== null && selectedPeriodId) {
+
                 //GET ALL NOTE OF A STUDENT
                 const studentNotesReq: unknown = await NoteService.getStudentNotes(
                     universe_db,
@@ -37,7 +39,7 @@ const Note = () => {
                     ? studentNotesReq
                     : [];
                 const notesFiltered: TNote[] = studentNotes.filter(
-                    (note: TNote) => note.idperiod === periodChoose?.idperiod,
+                    (note: TNote) => note.idperiod == parseInt(selectedPeriodId.toString()),
                 );
                 setNotesList(notesFiltered);
             }
@@ -51,9 +53,8 @@ const Note = () => {
         const subscription = checkAppState(appState, count, setCount);
         return () => {
             subscription.remove();
-        };*/
-        setLoading(false);
-    }, []); //selectedStudent, periodChoose, universe_db, count
+        };
+    }, [selectedStudent, selectedPeriodId, universe_db]);
 
     if (loading) {
         return <Loading />;
@@ -78,9 +79,6 @@ const Note = () => {
                                 ))}
                         </View>
                     </ScrollView>
-                    {/*<NoteByDate
-                        periodChoose={selectedPeriod}
-                    />*/}
                 </View>
             </View>
         </ViewThemed>
@@ -104,6 +102,5 @@ const styles = StyleSheet.create({
     noteListContainer: {
         flex: 1,
         backgroundColor: COLORS.white,
-        //marginBottom: 0,
     },
 });

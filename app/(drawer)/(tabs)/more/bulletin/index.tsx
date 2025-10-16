@@ -8,18 +8,18 @@ import ViewThemed from "../../../../../components/ui/ViewThemed";
 import {globalStyles} from "../../../../../style/Global";
 import {COLORS} from "../../../../../constants";
 import BulletinItem from "../../../../../components/ui/more/bulletin/BulletinItem";
+import ReportCardService from "../../../../../service/ReportCardService";
 
 const Bulletin = () => {
     const {t} = useTranslation();
-    //const {selectedStudent} = useSelector((state: any) => state.student);
-    //const {user} = useSelector((state: any) => state.user);
+    const {selectedStudent} = useSelector((state: any) => state.student);
+    const {user} = useSelector((state: any) => state.user);
     const [loading, setLoading] = useState(true);
     const [reportCardList, setReporCardList] = useState<TReportCard[]>([]);
-    //const universe_db = user?.main;
+    const universe_db = user?.main;
 
     useEffect(() => {
-        setLoading(false);
-        /*const fetchData = async () => {
+        const fetchData = async () => {
             setLoading(true);
             if (selectedStudent !== null) {
                 // GET STUDENT REPORT CARD
@@ -40,8 +40,8 @@ const Bulletin = () => {
         fetchData().catch(error => {
             console.log(error);
             setLoading(false);
-        });*/
-    }, []); //selectedStudent, universe_db
+        });
+    }, [selectedStudent, universe_db]);
 
     if (loading) {
         return <Loading />;

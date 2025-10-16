@@ -1,22 +1,38 @@
 import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 import {COLORS, IMAGES} from "../../constants";
 import {Image} from 'expo-image';
+import {useSelector} from "react-redux";
+import {BASEURL_IMG_STUDENT} from "../../api/appUrl";
 
-const DrawerHeaderItem = ({data, onStudentChange}) => {
+type TDrawerHeaderItemProps = {
+    key?: number | string;
+    data: any,
+    onStudentChange: (data: any) => void,
+}
+const DrawerHeaderItem = ({data, onStudentChange}: TDrawerHeaderItemProps) => {
+    const {user} = useSelector((state: any) => state.user);
+    const BASEURL = user?.urlplateforme;
+
     return (
         <TouchableOpacity onPress={() => onStudentChange(data)}>
             <View style={styles.itemContainer}>
                 <View style={styles.itemAvatarContainer}>
                     <Image
-                        source={IMAGES.avatar}
+                        source={
+                            data.uriphoto !== ''
+                                ? {
+                                    uri: `${BASEURL}/${BASEURL_IMG_STUDENT}/${data?.schoolYear?.anschool}/${data.uriphoto}`,
+                                }
+                                : IMAGES.avatar
+                        }
                         style={styles.itemAvatar}
                     />
                 </View>
                 <View style={styles.itemTextContainer}>
                     <Text style={{...styles.itemText, fontWeight: '500'} as StyleSheet}>
-                        Nom et prenom
+                        {data?.nomelev} {data?.prenomelev}
                     </Text>
-                    <Text style={styles.itemText}>Nom de la classe</Text>
+                    <Text style={styles.itemText}>{data?.classroom?.nomclase}</Text>
                 </View>
             </View>
         </TouchableOpacity>

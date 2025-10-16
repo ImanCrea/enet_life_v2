@@ -11,17 +11,20 @@ import Accordion from 'react-native-collapsible/Accordion';
 import {checkAppState} from "../../../../utils/utilities";
 import Loading from "../../../../components/ui/Loading";
 import {useLocalSearchParams} from "expo-router";
+import NoteService from "../../../../service/NoteService";
+import {TSubject} from "../../../../lib/type/TSubject";
+import SubjectService from "../../../../service/SubjectService";
 
 const Subject = () => {
     const [activeSections, setActiveSections] = useState([]);
     const [sections, setSections] = useState<any>([]);
     const [loading, setLoading] = useState(true);
-    //const {selectedStudent} = useSelector((state: any) => state.student);
+    const {selectedStudent} = useSelector((state: any) => state.student);
     const {user} = useSelector((state: any) => state.user);
     const universe_db = user?.main;
     const [count, setCount] = useState(0);
     const appState = useRef(AppState.currentState);
-    const { periodChoose } = useLocalSearchParams();
+    const { selectedPeriodId } = useLocalSearchParams();
 
     const renderHeader = (section: any, _: any, isActive: boolean) => {
         return (
@@ -31,7 +34,7 @@ const Subject = () => {
                         style={[globalStyles.titleH2, {paddingBottom: 1, textTransform: 'uppercase'} as StyleSheet]}>
                         {section.title}
                     </Text>
-                    <Text style={globalStyles.paragraph}>{section.teacherName}</Text>
+                    <Text style={globalStyles.paragraph}>{section.teacherName}ddd</Text>
                 </View>
                 <MaterialIcons
                     name={isActive ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
@@ -60,8 +63,7 @@ const Subject = () => {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
-            console.log(periodChoose);
-            /*if (selectedStudent !== null && periodChoose !== null) {
+            if (selectedStudent !== null && selectedPeriodId) {
                 //GET SUBJECTS LIST
                 const subjectsReq: unknown = await SubjectService.getSubjects(
                     universe_db,
@@ -77,18 +79,19 @@ const Subject = () => {
                     selectedStudent?.idelev,
                     selectedStudent?.classroom.idclase,
                 );
+
                 const notes: TNote[] = Array.isArray(notesReq) ? notesReq : [];
                 //FORMAT DATA FOR ACCORDION
                 const notesFormatted = NoteService.formatStudentsNotes(
                     notes,
                     subjects,
-                    periodChoose,
+                    selectedPeriodId.toString(),
                 );
                 const notesFormattedReq = Array.isArray(notesFormatted)
                     ? notesFormatted
                     : [];
                 setSections(notesFormattedReq);
-            }*/
+            }
             setLoading(false);
         };
 
@@ -101,7 +104,7 @@ const Subject = () => {
         return () => {
             subscription.remove();
         };
-    }, []);//selectedStudent, periodChoose, universe_db, count
+    }, [selectedStudent, selectedPeriodId, universe_db, count]);
 
     if (loading) {
         return <Loading />;

@@ -71,7 +71,7 @@ function NoteModal({visibility, setVisibility, data}) {
                         <View style={styles.modalTitle}>
                             <Text style={styles.modalTitleText}>{subject}</Text>
                             <Text style={styles.date}>
-                                {t('evaluation.noteDay_label')}
+                                {t('eval.noteDay_label')}
                                 {`${format(noteDate, 'dd', {locale: fr})} `}
                                 {`${format(noteDate, 'MMM', {locale: fr})} `}
                                 {format(noteDate, 'yyyy', {locale: fr})}
@@ -90,7 +90,7 @@ function NoteModal({visibility, setVisibility, data}) {
                             <>
                                 <View style={styles.detailRow}>
                                     <Text style={styles.labelDetailRow}>
-                                        {t('evaluation.note_student')}
+                                        {t('eval.note_student')}
                                     </Text>
                                     <Text style={styles.averageDetailRow}>
                                         {note} / {baseNote}
@@ -105,13 +105,13 @@ function NoteModal({visibility, setVisibility, data}) {
                                 </View>
                                 <View style={styles.detailRow}>
                                     <Text style={styles.labelDetailRow}>
-                                        {t('evaluation.up_note')}
+                                        {t('eval.up_note')}
                                     </Text>
                                     <Text style={styles.averageDetailRow}>{maxNote}</Text>
                                 </View>
                                 <View style={styles.detailRow}>
                                     <Text style={styles.labelDetailRow}>
-                                        {t('evaluation.down_note')}
+                                        {t('eval.down_note')}
                                     </Text>
                                     <Text style={styles.averageDetailRow}>{minNote}</Text>
                                 </View>

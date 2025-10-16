@@ -4,11 +4,17 @@ import {ImageBackground, Image} from "expo-image";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import {useNavigation} from "expo-router";
 import { DrawerActions } from '@react-navigation/native';
+import {useSelector} from "react-redux";
+import {JSX} from "react";
+import {BASEURL_IMG_STUDENT} from "../../api/appUrl";
 
 const CustomHeader = ({ title }) => {
     const colorScheme = useColorScheme();
     const theme = COLORS[colorScheme] ?? COLORS.light;
     const navigation = useNavigation();
+    const {selectedStudent} = useSelector((state: any) => state.student);
+    const {user} = useSelector((state: any) => state.user);
+    const BASEURL = user?.urlplateforme;
 
     const toggleDrawer = () => {
         navigation.dispatch(DrawerActions.toggleDrawer());
@@ -46,10 +52,18 @@ const CustomHeader = ({ title }) => {
                                 onPress={() => toggleDrawer()}
                                 style={styles.avatarContainer}>
                                 <View style={styles.avatarContent}>
-                                    <Image
-                                        source={IMAGES.avatar}
-                                        style={styles.avatar}
-                                    />
+                                    {selectedStudent !== null && (
+                                        <Image
+                                            source={
+                                                selectedStudent?.uriphoto !== ''
+                                                    ? {
+                                                        uri: `${BASEURL}/${BASEURL_IMG_STUDENT}/${selectedStudent?.schoolYear?.anschool}/${selectedStudent?.uriphoto}`,
+                                                    }
+                                                    : IMAGES.avatar
+                                            }
+                                            style={styles.avatar}
+                                        /> as JSX.Element
+                                    )}
                                 </View>
                             </Pressable>
                         </View>

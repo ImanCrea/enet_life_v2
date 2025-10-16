@@ -41,15 +41,15 @@ class NoteService {
   static formatStudentsNotes = (
     notes: TNote[],
     subjects: TSubject[],
-    periodChoose: TPeriod,
+    periodChooseId: string,
   ) => {
     let setionsData = [];
-    for (var j = 0; j < subjects.length; j++) {
+    for (let j = 0; j < subjects.length; j++) {
       const subject = subjects[j];
       const data = notes.filter(
         note =>
           note.idmat === subject.idmat &&
-          note.idperiod === periodChoose.idperiod,
+          note.idperiod.toString() === periodChooseId,
       );
 
       if (data.length > 0) {

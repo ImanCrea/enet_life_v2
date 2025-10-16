@@ -7,11 +7,12 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import DrawerHeaderItem from "./DrawerHeaderItem";
 import {useTranslation} from "react-i18next";
 import {globalStyles} from "../../style/Global";
-import {useEffect, useState} from "react";
+import {JSX, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {changeChild, initializeChildValue} from "../../redux/features/student/studentSlice";
 import {DrawerActions} from "@react-navigation/native";
 import {logoutUser, setOnBoardingStatus} from "../../redux/features/userSlice";
+import {BASEURL_IMG_STUDENT} from "../../api/appUrl";
 
 const DrawerHeaderContent = (props) => {
     const colorScheme = useColorScheme();
@@ -62,42 +63,64 @@ const DrawerHeaderContent = (props) => {
             <View style={styles.headerContainer}>
                 <View style={styles.avatarContainer}>
                     <View style={styles.avatarContent}>
-                        <Image
-                            source={IMAGES.avatar}
-                            style={styles.avatar}
-                        />
+                        {selectedStudent !== null && (
+                            <Image
+                                source={
+                                    selectedStudent.uriphoto !== ''
+                                        ? {
+                                            uri: `${BASEURL}/${BASEURL_IMG_STUDENT}/${selectedStudent?.schoolYear?.anschool}/${selectedStudent.uriphoto}`,
+                                        }
+                                        : IMAGES.avatar
+                                }
+                                style={styles.avatar}
+                            /> as JSX.Element
+                        )}
                     </View>
                 </View>
 
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>
-                        Nom Prenom
+                        {selectedStudent?.nomelev} {selectedStudent?.prenomelev}
                     </Text>
                     <Text style={styles.classroom}>
-                        Nom de la classe
+                        {selectedStudent?.classroom?.nomclase}
                     </Text>
                     <Text style={styles.classroom}>
-                        Etablissement
+                        {selectedStudent?.schoolInfo?.nometabl}
                     </Text>
                 </View>
 
                 <View style={styles.headerIcon}>
-                    <TouchableOpacity onPress={() => {}}>
-                        <MaterialCommunityIcons
-                            name="chevron-up"
-                            size={28}
-                            style={styles.icon}
-                        />
-                    </TouchableOpacity>
+                    {students.length > 1 && (
+                        <TouchableOpacity onPress={handleIconChange}>
+                            {studentsList ? (
+                                <MaterialCommunityIcons
+                                    name="chevron-up"
+                                    size={28}
+                                    style={styles.icon}
+                                />
+                            ) : (
+                                <MaterialCommunityIcons
+                                    name="chevron-down"
+                                    size={28}
+                                    style={styles.icon}
+                                />
+                            )}
+                        </TouchableOpacity>
+                    )}
                 </View>
-
             </View>
 
             <View style={styles.childListContainer}>
-                <DrawerHeaderItem
-                    data={{}}
-                    onStudentChange={() => {}}
-                />
+                {studentsList &&
+                    studentsData.length > 0 &&
+                    studentsData.map((student: any) => (
+                        <DrawerHeaderItem
+                            key={student?.idelev}
+                            data={student}
+                            onStudentChange={handleStudentChange}
+                        />
+                    ))}
             </View>
 
             <DrawerItemList {...props} />
@@ -150,7 +173,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     headerText: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '700',
         color: COLORS.gray,
     },

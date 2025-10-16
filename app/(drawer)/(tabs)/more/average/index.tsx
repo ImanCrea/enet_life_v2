@@ -9,24 +9,27 @@ import {TPeriod} from "../../../../../lib/type/TPeriod";
 import {TAverage} from "../../../../../lib/type/TAverage";
 import Loading from "../../../../../components/ui/Loading";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AverageService from "../../../../../service/AverageService";
+import {checkAppState} from "../../../../../utils/utilities";
+import PeriodService from "../../../../../service/PeriodService";
 
 const Average = () => {
     const {t} = useTranslation();
-    //const {selectedStudent} = useSelector((state: any) => state.student);
-    //const {user} = useSelector((state: any) => state.user);
+    const {selectedStudent} = useSelector((state: any) => state.student);
+    const {user} = useSelector((state: any) => state.user);
     const [loading, setLoading] = useState(true);
     const [periodList, setPeriodList] = useState<TPeriod[]>([]);
     const [selectedPeriod, setSelectedPeriod] = useState<TPeriod | null>(null);
     const [indexSelected, setIndexSelected] = useState(0);
     const [size, setSize] = useState(0);
     const [averageList, setAverageList] = useState<TAverage[]>([]);
-    //const universe_db = user?.main;
+    const universe_db = user?.main;
     const [count, setCount] = useState(0);
     const appState = useRef(AppState.currentState);
 
     const handleForward = async (index: number) => {
         setLoading(true);
-        /*if (periodList.length > 0) {
+        if (periodList.length > 0) {
             if (index + 1 < periodList.length) {
                 const indexFound = index + 1;
                 setIndexSelected(indexFound);
@@ -41,12 +44,12 @@ const Average = () => {
             } else {
                 setIndexSelected(periodList.length);
             }
-        }*/
+        }
         setLoading(false);
     };
     const handleBack = async (index: number) => {
         setLoading(true);
-        /*if (periodList.length > 0) {
+        if (periodList.length > 0) {
             if (index - 1 >= 0) {
                 const indexFound = index - 1;
                 setSelectedPeriod(periodList[indexFound]);
@@ -61,13 +64,12 @@ const Average = () => {
             } else {
                 setIndexSelected(0);
             }
-        }*/
+        }
         setLoading(false);
     };
 
     useEffect(() => {
-        setLoading(false);
-        /*const fetchData = async () => {
+        const fetchData = async () => {
             //GET SCHOOL PERIODS
             const reqResult = await PeriodService.getPeriodsListByDay(universe_db);
             setPeriodList(reqResult.periodList);
@@ -98,8 +100,8 @@ const Average = () => {
         const subscription = checkAppState(appState, count, setCount);
         return () => {
             subscription.remove();
-        };*/
-    }, []); //selectedStudent, universe_db, count
+        };
+    }, [selectedStudent, universe_db, count]);
 
     if (loading) {
         return <Loading />;

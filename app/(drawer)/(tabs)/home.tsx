@@ -1,10 +1,10 @@
-import {View, Text, ScrollView, StyleSheet} from "react-native";
+import {View, Text, ScrollView, StyleSheet, AppState} from "react-native";
 import ViewThemed from "../../../components/ui/ViewThemed";
 import {globalStyles} from "../../../style/Global";
 import {COLORS, IMAGES} from "../../../constants";
 import {ImageBackground, Image} from "expo-image";
 import {useTranslation} from "react-i18next";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Card from "../../../components/ui/Card";
 import NoteItem from "../../../components/ui/note/NoteItem";
 import FlatButton from "../../../components/ui/FlatButton";
@@ -16,6 +16,15 @@ import NextEvaluationItem from "../../../components/ui/home/NextEvaluationItem";
 import RecentPaymentItem from "../../../components/ui/home/RecentPaymentItem";
 import {TAbsence} from "../../../lib/type/TAbsence";
 import AbsenceLateItem from "../../../components/ui/home/AbsenceLateItem";
+import {useSelector} from "react-redux";
+import {TNote} from "../../../lib/type/TNotesProps";
+import {TWorkday} from "../../../lib/type/TWorkday";
+import WorkdayService from "../../../service/WorkdayService";
+import {checkAppState, checkIsNumber, convertWorkdaysToString} from "../../../utils/utilities";
+import TuitionService from "../../../service/TuitionService";
+import AbsenceService from "../../../service/AbsenceService";
+import Loading from "../../../components/ui/Loading";
+import {useRouter} from "expo-router";
 
 const Home = () => {
     const {t} = useTranslation();
@@ -27,35 +36,13 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const [paymentList, setPaymentList] = useState<any>([]);
     const [absenceList, setAbsenceList] = useState<TAbsence[]>([]);
-    //const {selectedStudent} = useSelector((state: any) => state.student);
-    //const {user} = useSelector((state: any) => state.user);
-
-    const notesList = [
-        {
-            id: 1,
-            idnote: 101,
-            nomat: 'Mathématiques',
-            note: 15.5,
-            dateupdate: '2023-10-01',
-            etatnote: 'green',
-        },
-        {
-            id: 2,
-            idnote: 102,
-            nomat: 'Anglais',
-            note: 10,
-            dateupdate: '10-09-2025',
-            etatnote: 'orange',
-        },
-        {
-            id: 3,
-            idnote: 103,
-            nomat: 'Français',
-            note: 8,
-            dateupdate: '10-10-2025',
-            etatnote: 'red',
-        }
-    ];
+    const {selectedStudent} = useSelector((state: any) => state.student);
+    const {user} = useSelector((state: any) => state.user);
+    const [notesList, setNotesList] = useState<TNote[]>([]);
+    const universe_db = user?.main;
+    const [count, setCount] = useState(0);
+    const appState = useRef(AppState.currentState);
+    const router = useRouter();
 
     const handleDateChange = (dateSelected: Date) => {
         setDate(dateSelected);
@@ -66,13 +53,77 @@ const Home = () => {
             nextEvaluationList,
             evalDateSelected,
         );
-
         setTodayEvaluationList(response);
     };
 
     useEffect(() => {
-        setLoading(true);
-    }, []);
+        const fetchData = async () => {
+            setLoading(true);
+            //GET WORKDAYS
+            const workdays: TWorkday[] = await WorkdayService.getWorkdays(
+                universe_db,
+            );
+            const workdaysRes = convertWorkdaysToString(workdays);
+            setWorkDaysNameList(workdaysRes);
+
+            //GET ALL NOTE OF A STUDENT
+            if (selectedStudent !== null) {
+                const studentNotesReq: any = await NoteService.getStudentNotes(
+                    universe_db,
+                    selectedStudent?.idelev,
+                    selectedStudent?.classroom?.idclase,
+                    3,
+                );
+                const studentNotes: TNote[] = Array.isArray(studentNotesReq)
+                    ? studentNotesReq
+                    : [];
+                setNotesList(studentNotes);
+
+                //GET ALL NEXT EVALUATIONS
+                const dayEvaluationList: any = await NoteService.getStudentEvaluations(
+                    selectedStudent?.classroom?.idclase,
+                );
+                setNextEvaluationList(dayEvaluationList);
+                const evalDateSelected = new Date().setHours(0, 0, 0, 0);
+                const todayEvaluations: any = NoteService.getDayEvaluations(
+                    dayEvaluationList,
+                    evalDateSelected,
+                );
+                setTodayEvaluationList(todayEvaluations);
+
+                //GET TUITION ACCOUNT
+                const tuitionBalance = await TuitionService.getTuitionBalance(
+                    universe_db,
+                    selectedStudent?.idelev,
+                    selectedStudent?.idpromo_fk,
+                );
+                const checkTBalance = checkIsNumber(tuitionBalance);
+                setSoldeScolarite(checkTBalance);
+
+                //GET STUDENT ABSENCES
+                const absences: any = await AbsenceService.getStudentAbsences(
+                    universe_db,
+                    selectedStudent?.idelev,
+                    4,
+                );
+                setAbsenceList(absences);
+                setLoading(false);
+            }
+        };
+        fetchData().catch(error => {
+            console.log(error);
+            setLoading(false);
+        });
+
+        const subscription = checkAppState(appState, count, setCount);
+        return () => {
+            subscription.remove();
+        };
+    }, [selectedStudent, universe_db, count]);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <ViewThemed style={globalStyles.container}>
@@ -115,7 +166,7 @@ const Home = () => {
                                                         titleStyle={{
                                                             fontSize: 14,
                                                         }}
-                                                        onPress={() => {}}
+                                                        onPress={() => router.push('eval/note')}
                                                     />
                                                 </View>
                                             </View>
@@ -186,7 +237,7 @@ const Home = () => {
 
                             <View style={styles.schoolingBalance}>
                                 <View style={styles.balanceContent}>
-                                    <View style={{flex: 2, alignItems: 'center'}}>
+                                    <View style={{flex: 2, alignItems: 'center'} as StyleSheet}>
                                         <Text style={styles.balanceTitle}>
                                             {t('home.balance_title')}
                                         </Text>
@@ -197,7 +248,6 @@ const Home = () => {
                                     <View style={{flex: 1}}>
                                         <Image
                                             source={IMAGES.schoolingBalance}
-                                            /*resizeMode={'cover'}*/
                                             style={styles.schoolingBalanceImage}
                                         />
                                     </View>
@@ -249,7 +299,6 @@ const Home = () => {
                                 <Card style={{borderRadius: 8, padding: 10}}>
                                     <ImageBackground
                                         source={IMAGES.backgroundImageAbsence}
-                                        // resizeMode={'cover'}
                                        >
                                         {(absenceList.length === 0 || false) && (
                                             <View>
@@ -306,15 +355,11 @@ const styles = StyleSheet.create({
     noteContainer: {
         paddingHorizontal: 15,
     },
-    /*noteContent: {},*/
-    nextEvaluation: {
-
-    },
+    nextEvaluation: {},
     calendarContainer: {
         paddingHorizontal: 10,
     },
     calendarDetails: {
-        /*marginTop: 10,*/
         padding: 15,
         borderTopWidth: 1,
         borderBottomWidth: 1,
@@ -325,11 +370,9 @@ const styles = StyleSheet.create({
     detailsTitle: {
         flex: 1,
         flexDirection: 'row',
-        //marginBottom: 15,
     },
     schooling: {
         flex: 1,
-        //paddingTop: 25,
     },
     schoolingBalance: {
         paddingHorizontal: 15,
@@ -340,9 +383,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         padding: 15,
-        //paddingTop: 20,
         backgroundColor: COLORS.grayMedium,
-        //backgroundColor: '#E9E9E9'
     },
     balanceTitle: {
         color: COLORS.gray,
@@ -362,7 +403,6 @@ const styles = StyleSheet.create({
     },
     recentPaymentContainer: {
         paddingTop: 25,
-        //paddingHorizontal: 15,
     },
     recentPaymentHr: {
         marginTop: 10,
@@ -370,9 +410,7 @@ const styles = StyleSheet.create({
     absenceContainer: {
         paddingHorizontal: 15,
     },
-    absenceContent: {
-        //paddingHorizontal: 15,
-    },
+    absenceContent: {},
     absenceItem: {
         flex: 1,
         flexDirection: 'row',

@@ -8,6 +8,7 @@ import AuthenticationService from "../../service/AuthenticationService";
 import {generateToken} from "../../utils/utilities";
 import {loginUser} from "../../redux/features/userSlice";
 import {useDispatch} from "react-redux";
+import {getUserChildren} from "../../redux/features/student/studentSlice";
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState('');
@@ -28,7 +29,7 @@ const Login = () => {
                 token: token,
             };
             dispatch(loginUser(userInfo));
-            //dispatch(getUserChildren({studentList: response.data?.studentList}));
+            dispatch(getUserChildren({studentList: response.data?.studentList}));
             setButtonStatus(false);
         }
         catch (error) {

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, ScrollView, StyleSheet, AppState} from "react-native";
 import ViewThemed from "../../../../components/ui/ViewThemed";
 import {globalStyles} from "../../../../style/Global";
@@ -9,11 +9,14 @@ import {Image} from 'expo-image';
 import OtherFeesItem from "../../../../components/ui/tuition/OtherFeesItem";
 import {TPayment} from "../../../../lib/type/TPayment";
 import ItemPayment from "../../../../components/ui/tuition/ItemPayment";
+import {checkAppState, checkIsNumber} from "../../../../utils/utilities";
+import Loading from "../../../../components/ui/Loading";
+import TuitionService from "../../../../service/TuitionService";
 
 const TuitionPayment = () => {
     const {t} = useTranslation();
     const [loading, setLoading] = useState(true);
-    //const {selectedStudent} = useSelector((state: any) => state.student);
+    const {selectedStudent} = useSelector((state: any) => state.student);
     const {user} = useSelector((state: any) => state.user);
     const [soldeScolarite, setSoldeScolarite] = useState('0');
     const [amountTuition, setAmountTuition] = useState('0');
@@ -26,6 +29,54 @@ const TuitionPayment = () => {
     const universe_db = user?.main;
     const [count, setCount] = useState(0);
     const appState = useRef(AppState.currentState);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            if (selectedStudent !== null) {
+                //GET TUITION INFORMATION'S
+                const tutionInfo = await TuitionService.getTuition(
+                    universe_db,
+                    selectedStudent?.idelev,
+                    selectedStudent?.idpromo_fk,
+                );
+                const tuitionBalance = checkIsNumber(tutionInfo?.tuitionBalance);
+                setSoldeScolarite(tuitionBalance);
+                const tuitionAmount = checkIsNumber(tutionInfo?.tuitionAmount);
+                setAmountTuition(tuitionAmount);
+                const tuitionTotalPayment = checkIsNumber(tutionInfo?.paymentsAmount);
+                setTotalPayment(tuitionTotalPayment);
+                const tuitionReduction = checkIsNumber(tutionInfo?.reductionsAmount);
+                setReduction(tuitionReduction);
+
+                const paymentsResult: TPayment[] = Array.isArray(
+                    tutionInfo?.paymentsList,
+                )
+                    ? tutionInfo?.paymentsList
+                    : [];
+                setPaymentsList(paymentsResult);
+
+                const otherTuition = Array.isArray(tutionInfo?.otherTuitionFees)
+                    ? tutionInfo?.otherTuitionFees
+                    : null;
+                setOtherTuitionFeesList(otherTuition);
+            }
+            setLoading(false);
+        };
+        fetchData().catch(error => {
+            console.log(error);
+            setLoading(false);
+        });
+
+        const subscription = checkAppState(appState, count, setCount);
+        return () => {
+            subscription.remove();
+        };
+    }, [selectedStudent, universe_db, count]);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <ViewThemed style={globalStyles.container}>
@@ -41,13 +92,12 @@ const TuitionPayment = () => {
                                     <Image
                                         source={IMAGES.schoolingBalance}
                                         style={styles.tuitionBalanceImage}
-                                        //resizeMode="stretch"
                                     />
                                     <Text style={styles.balanceTitle}>
                                         {t('tuition.balanceText')}
                                     </Text>
                                     <Text style={styles.balanceAmount}>
-                                        {/*{soldeScolarite} {t('tuition.currency')}*/}
+                                        {soldeScolarite} {t('tuition.currency')}
                                     </Text>
                                 </View>
                             </View>

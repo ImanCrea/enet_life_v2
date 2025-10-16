@@ -8,11 +8,14 @@ import {TDeadlineTuition} from "../../../../lib/type/TDeadlineTuition";
 import {COLORS, TUITION_TYPE} from "../../../../constants";
 import Loading from "../../../../components/ui/Loading";
 import DeadlineTypeItem from "../../../../components/ui/tuition/DeadlineTypeItem";
+import {checkAppState, checkIsNumber} from "../../../../utils/utilities";
+import TuitionService from "../../../../service/TuitionService";
+import ItemDeadline from "../../../../components/ui/tuition/ItemDeadline";
 
 const TuitionDeadline = () => {
     const {t} = useTranslation();
-    //const {selectedStudent} = useSelector((state: any) => state.student);
-    //const {user} = useSelector((state: any) => state.user);
+    const {selectedStudent} = useSelector((state: any) => state.student);
+    const {user} = useSelector((state: any) => state.user);
     const [loading, setLoading] = useState(true);
     const [tuitionAmount, setTuitionAmount] = useState('0');
     const [canteenAmount, setCanteenAmount] = useState('0');
@@ -20,7 +23,7 @@ const TuitionDeadline = () => {
     const [deadlineList, setDeadlineList] = useState<TDeadlineTuition[]>([]);
     const [globalResult, setGlobalResult] = useState<any>([]);
     const [deadlineTitle, setDeadlineTile] = useState('');
-    //const universe_db = user?.main;
+    const universe_db = user?.main;
     const [count, setCount] = useState(0);
     const appState = useRef(AppState.currentState);
 
@@ -29,9 +32,7 @@ const TuitionDeadline = () => {
         if (tuitionType === TUITION_TYPE.TUITION) {
             setDeadlineList(globalResult?.deadlineTuition?.tuitionList);
             setDeadlineTile(
-                `${t('tuition.deadlineTitle')}${t(
-                    'tuition.tuition',
-                )} : ${tuitionAmount}`,
+                `${t('tuition.deadlineTitle')}${t('tuition.tuition')} : ${tuitionAmount}`,
             );
         } else if (tuitionType === TUITION_TYPE.CANTEEN) {
             setDeadlineList(globalResult?.deadlineCanteen?.canteenList);
@@ -53,7 +54,7 @@ const TuitionDeadline = () => {
 
     useEffect(() => {
         setLoading(false)
-        /*const fetchData = async () => {
+        const fetchData = async () => {
             setLoading(true);
             if (selectedStudent !== null) {
                 // GET TUITION DEADLINE
@@ -69,9 +70,7 @@ const TuitionDeadline = () => {
                 setTuitionAmount(tuitionAmountRes);
                 setDeadlineList(deadlineReq?.deadlineTuition.tuitionList);
                 setDeadlineTile(
-                    `${t('tuition.deadlineTitle')}${t(
-                        'tuition.tuition',
-                    )} : ${tuitionAmountRes}`,
+                    `${t('tuition.deadlineTitle')}${t('tuition.tuition')} : ${tuitionAmountRes}`,
                 );
 
                 const canteenAmountRes = checkIsNumber(
@@ -94,8 +93,8 @@ const TuitionDeadline = () => {
         const subscription = checkAppState(appState, count, setCount);
         return () => {
             subscription.remove();
-        };*/
-    }, []); //selectedStudent, t, universe_db, count
+        };
+    }, [selectedStudent, t, universe_db, count]);
 
     if (loading) {
         return <Loading />;

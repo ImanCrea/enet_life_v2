@@ -6,7 +6,12 @@ import {TDeadlineTuition} from "../../../lib/type/TDeadlineTuition";
 import {formatNumberFr, formatNumberOnTwoPad} from "../../../utils/utilities";
 import {COLORS} from "../../../constants";
 
-function ItemDeadline({data, index}: {data: TDeadlineTuition; index: number}) {
+type TItemDeadlineProps = {
+  key?: number | string;
+  data: TDeadlineTuition;
+  index: number;
+}
+function ItemDeadline({data, index}: TItemDeadlineProps) {
   const {t} = useTranslation();
   const dateDeadline = Number.parseInt(data?.datelimite.toString() ?? '0', 10);
   return (

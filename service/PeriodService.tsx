@@ -1,5 +1,5 @@
 import {getRequest} from '../api/ApiManager';
-import {TPeriod} from '../lib/types/TPeriod';
+import {TPeriod} from '../lib/type/TPeriod';
 import {set} from 'date-fns';
 
 class PeriodService {
@@ -59,8 +59,7 @@ class PeriodService {
       return {
         periodList: periods,
         periodSelected: schoolPeriod,
-        indexSelected:
-          periodIndexFound !== undefined ? periodIndexFound : periodConcern,
+        indexSelected: periodIndexFound !== undefined ? periodIndexFound : periodConcern,
       };
     }
     return {

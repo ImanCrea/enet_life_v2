@@ -3,7 +3,11 @@ import {useTranslation} from 'react-i18next';
 import {COLORS} from "../../../constants";
 import {formatNumberFr} from "../../../utils/utilities";
 
-function OtherFeesItem({data, key}: {data: any; key: number}) {
+type TOtherFeesItemProps = {
+    key?: number | string,
+    data: any;
+}
+function OtherFeesItem({data}: TOtherFeesItemProps) {
     const {t} = useTranslation();
     return (
         <View style={styles.otherFeesItemContainer}>

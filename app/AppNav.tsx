@@ -9,10 +9,8 @@ const AppNav = () => {
     const {languageSelected} = useSelector((state: any) => state.language);
     const {userToken, onBoardingStatus} = useSelector((state: any) => state.user);
 
-
     useEffect(() => {
         i18n.changeLanguage(languageSelected).catch((error) => console.log(error));
-        //console.log(languageSelected);
         console.log(userToken);
         console.log(onBoardingStatus);
     }, [i18n, languageSelected]);

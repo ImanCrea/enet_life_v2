@@ -10,8 +10,11 @@ import {useTranslation} from "react-i18next";
 import {Text, TouchableOpacity, View, StyleSheet} from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {globalStyles} from "../../../../style/Global";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TPeriod} from "../../../../lib/type/TPeriod";
+import {useSelector} from "react-redux";
+import PeriodService from "../../../../service/PeriodService";
+import Loading from "../../../../components/ui/Loading";
 
 const { Navigator } = createMaterialTopTabNavigator();
 
@@ -23,11 +26,15 @@ export const MaterialTopTabs = withLayoutContext<
 >(Navigator);
 
 export default function EvalTopTabLayout() {
-    const [indexSelected, setIndexSelected] = useState(0);
+    const [indexSelected, setIndexSelected] = useState<any>(0);
     const {t} = useTranslation();
-    const [periodList, setPeriodList] = useState<TPeriod[]>([]);
-    const [selectedPeriod, setSelectedPeriod] = useState<TPeriod | null>(null);
-    const [size, setSize] = useState(0);
+    const [periodList, setPeriodList] = useState<any>([]);
+    const [selectedPeriod, setSelectedPeriod] = useState<any>(null);
+    const [size, setSize] = useState<number | undefined>(0);
+    //const [loading, setLoading] = useState(true);
+    const {user} = useSelector((state: any) => state.user);
+    const universe_db = user?.main;
+    const [loading, setLoading] = useState(true);
 
     const handleForward = (index: number) => {
         if (periodList.length > 0) {
@@ -52,6 +59,26 @@ export default function EvalTopTabLayout() {
         }
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            //GET SCHOOL PERIODS
+            const reqResult = await PeriodService.getPeriodsListByDay(universe_db);
+            setPeriodList(reqResult.periodList);
+            setSelectedPeriod(reqResult.periodSelected);
+            setIndexSelected(reqResult.indexSelected);
+            setSize(reqResult.indexSelected);
+            setLoading(false);
+        };
+        fetchData().catch(error => {
+            console.log(error);
+            setLoading(false);
+        });
+    }, [universe_db]);
+
+    if (loading) {
+        return <Loading />;
+    }
+
     return (
         <>
             <View style={styles.noteHeader}>
@@ -71,7 +98,6 @@ export default function EvalTopTabLayout() {
                     <Text
                         style={[globalStyles.title]}>
                         {selectedPeriod?.nomperiod}
-                        1er trimestre
                     </Text>
                 </View>
                 <View style={styles.nextButton}>
@@ -109,26 +135,32 @@ export default function EvalTopTabLayout() {
                     name="note"
                     options={{
                         tabBarLabel: t('eval.date'),
+                        title: t('eval.date'),
                         tabBarLabelStyle: {
                             textTransform: 'none',
                             fontSize: 15,
                             fontWeight: '700',
                         },
                     }}
-                    initialParams={{periodChoose: selectedPeriod}}
+                    initialParams={{
+                        selectedPeriodId: selectedPeriod.idperiod,
+                    }}
                 />
+
                 <MaterialTopTabs.Screen
                     name="subject"
                     options={{
                         tabBarLabel: t('eval.subject'),
+                        title: t('eval.subject'),
                         tabBarLabelStyle: {
                             textTransform: 'none',
                             fontSize: 15,
                             fontWeight: '700',
                         },
                     }}
-                    data="1"
-                    /*initialParams={{periodChoose: selectedPeriod}}*/
+                    initialParams={{
+                        selectedPeriodId: selectedPeriod.idperiod
+                    }}
                 />
             </MaterialTopTabs>
         </>

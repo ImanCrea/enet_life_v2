@@ -6,17 +6,18 @@ import {useSelector} from "react-redux";
 import {TTeacher} from "../../../../../lib/type/TTeacher";
 import Loading from "../../../../../components/ui/Loading";
 import TeacherItem from "../../../../../components/ui/more/teacher/TeacherItem";
+import TeacherService from "../../../../../service/TeacherService";
 
 const Teacher = () => {
-    //const {selectedStudent} = useSelector((state: any) => state.student);
-    //const {user} = useSelector((state: any) => state.user);
+    const {selectedStudent} = useSelector((state: any) => state.student);
+    const {user} = useSelector((state: any) => state.user);
     const [teachersList, setTeachersList] = useState<TTeacher[]>([]);
     const [loading, setLoading] = useState(true);
-    //const universe_db = user?.main;
+    const universe_db = user?.main;
 
     useEffect(() => {
         setLoading(false);
-        /*const fetchData = async () => {
+        const fetchData = async () => {
             setLoading(true);
             if (selectedStudent !== null) {
                 const teachersReq: any = await TeacherService.getClassroomTeachers(
@@ -33,8 +34,8 @@ const Teacher = () => {
         fetchData().catch(error => {
             console.log(error);
             setLoading(false);
-        });*/
-    }, []); //selectedStudent, universe_db
+        });
+    }, [selectedStudent, universe_db]);
 
     if (loading) {
         return <Loading />;

@@ -9,10 +9,14 @@ import {useTranslation} from "react-i18next";
 import {TEdtPeriod} from "../../../../lib/type/TPeriod";
 import {useSelector} from "react-redux";
 import {TEdt} from "../../../../lib/type/TEdt";
-import {checkAppState, formatLongDateFr} from "../../../../utils/utilities";
+import {checkAppState, convertWorkdaysToString, formatLongDateFr} from "../../../../utils/utilities";
 import Loading from "../../../../components/ui/Loading";
 import WeekCalendar from "../../../../components/ui/WeekCalendar";
 import EdtItem from "../../../../components/ui/edt/EdtItem";
+import {getTime} from "date-fns";
+import EdtService from "../../../../service/EdtService";
+import {TWorkday} from "../../../../lib/type/TWorkday";
+import WorkdayService from "../../../../service/WorkdayService";
 
 const Calendar = () => {
     const {t} = useTranslation();
@@ -28,14 +32,14 @@ const Calendar = () => {
     const [size, setSize] = useState(0);
     const [edtPdf, setEdtPdf] = useState(null);
     const [loading, setLoading] = useState(true);
-    //const {selectedStudent} = useSelector((state: any) => state.student);
-    //const {user} = useSelector((state: any) => state.user);
-    //const universe_db = user?.main;
+    const {selectedStudent} = useSelector((state: any) => state.student);
+    const {user} = useSelector((state: any) => state.user);
+    const universe_db = user?.main;
     const [count, setCount] = useState(0);
     const appState = useRef(AppState.currentState);
 
     const handleDateChange = (dateSelected: Date) => {
-        /*setDate(dateSelected);
+        setDate(dateSelected);
         const selectDay = getTime(dateSelected);
 
         const edtDateSelected = new Date(selectDay).setHours(0, 0, 0, 0);
@@ -44,15 +48,13 @@ const Calendar = () => {
             edtDateSelected,
             edtPeriodSelected !== null ? edtPeriodSelected.idedt : 0,
         );
-        setDayEdt(todayEdt);*/
+        setDayEdt(todayEdt);
     };
 
     const handleForward = (index: number) => {
-        //setLoading(true);
         if (edtPeriods.length > 0) {
-            /*if (index + 1 < edtPeriods.length) {
+            if (index + 1 < edtPeriods.length) {
                 const indexFound = index + 1;
-                //console.log(edtPeriods[indexFound].idedt);
                 setIndexSelected(indexFound);
                 setEdtPeriodSelected(edtPeriods[indexFound]);
 
@@ -65,14 +67,13 @@ const Calendar = () => {
                 setDayEdt(todayEdt);
             } else {
                 setIndexSelected(edtPeriods.length);
-            }*/
+            }
         }
-        //setLoading(false);
     };
 
     const handleBack = (index: number) => {
         if (edtPeriods.length > 0) {
-            /*if (index - 1 >= 0) {
+            if (index - 1 >= 0) {
                 const indexFound = index - 1;
                 setEdtPeriodSelected(edtPeriods[indexFound]);
                 setIndexSelected(indexFound);
@@ -85,13 +86,12 @@ const Calendar = () => {
                 setDayEdt(todayEdt);
             } else {
                 setIndexSelected(0);
-            }*/
+            }
         }
     };
 
     useEffect(() => {
-        setLoading(false);
-        /*const fecthData = async () => {
+        const fetchData = async () => {
             setLoading(true);
             if (selectedStudent !== null) {
                 //GET WORKDAYS
@@ -136,7 +136,7 @@ const Calendar = () => {
             setLoading(false);
         };
 
-        fecthData().catch(error => {
+        fetchData().catch(error => {
             console.log(error);
             setLoading(false);
         });
@@ -144,8 +144,8 @@ const Calendar = () => {
         const subscription = checkAppState(appState, count, setCount);
         return () => {
             subscription.remove();
-        };*/
-    }, []); //selectedStudent, universe_db, count
+        };
+    }, [selectedStudent, universe_db, count]);
 
     if (loading) {
         return <Loading />;
@@ -242,10 +242,8 @@ export default Calendar;
 
 const styles = StyleSheet.create({
     edtHeader: {
-        //flex: 1,
         minHeight: 80,
         paddingBottom: 13,
-        //backgroundColor: 'yellow',
     },
     edtHeaderContent: {
         flexDirection: 'row',

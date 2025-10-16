@@ -9,20 +9,21 @@ import {TAbsence} from "../../../../../lib/type/TAbsence";
 import Loading from "../../../../../components/ui/Loading";
 import {ImageBackground} from "expo-image";
 import AbsenceLateItem from "../../../../../components/ui/more/absence/AbsenceLateItem";
+import {checkAppState} from "../../../../../utils/utilities";
+import AbsenceService from "../../../../../service/AbsenceService";
 
 const Absence = () => {
     const {t} = useTranslation();
     const [loading, setLoading] = useState(true);
     const [absenceList, setAbsenceList] = useState<TAbsence[]>([]);
-    //const {selectedStudent} = useSelector((state: any) => state.student);
-    //const {user} = useSelector((state: any) => state.user);
-    //const universe_db = user?.main;
+    const {selectedStudent} = useSelector((state: any) => state.student);
+    const {user} = useSelector((state: any) => state.user);
+    const universe_db = user?.main;
     const [count, setCount] = useState(0);
     const appState = useRef(AppState.currentState);
 
     useEffect(() => {
-        setLoading(false);
-        /*const fetchData = async () => {
+        const fetchData = async () => {
             setLoading(true);
             if (selectedStudent !== null) {
                 //GET STUDENT ABSENCES
@@ -42,8 +43,8 @@ const Absence = () => {
         const subscription = checkAppState(appState, count, setCount);
         return () => {
             subscription.remove();
-        };*/
-    }, []); //selectedStudent, universe_db, count
+        };
+    }, [selectedStudent, universe_db, count]);
 
     if (loading) {
         return <Loading />;
@@ -101,7 +102,6 @@ export default Absence;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //backgroundColor: COLORS.white,
     },
     content: {
         flex: 1,
