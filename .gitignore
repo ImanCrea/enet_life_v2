@@ -36,10 +36,16 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# Ruby / CocoaPods
+/ios/Pods/
+/vendor/bundle/
+
 # generated native folders
-/ios
-/android
+#/ios
+#/android
 
 api/apiAccessInfo.ts
 android/gradle.properties
 android/app/enet_life_key_store.keystore
+android/app/debug.keystore
+android/app/build
