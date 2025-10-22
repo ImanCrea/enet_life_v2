@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react';
 import {View, StyleSheet, Dimensions, FlatList, Text, Image, TouchableOpacity} from "react-native";
 import {COLORS, IMAGES} from "../constants";
 import {StatusBar} from "expo-status-bar";
-import {SafeAreaView} from "react-native-safe-area-context";
+import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import Spacer from "../components/ui/Spacer";
 import {useRouter} from "expo-router";
 import ViewThemed from "../components/ui/ViewThemed";
@@ -73,7 +73,7 @@ const OnBoardingScreen = ({navigation}) => {
                         }]} />
                     ))}
                 </ViewThemed>
-                <Spacer height={40} />
+                <Spacer height={25} />
                 <ViewThemed style={{ flex: 1, marginBottom: 20}}>
                     {currentSlideIndex === slides.length - 1 ? (
                         <View style={{height: 55}}>
@@ -133,8 +133,8 @@ const OnBoardingScreen = ({navigation}) => {
         setCurrentSlideIndex(lastSlideIndex);
     }*/
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-            <StatusBar value="auto" />
+        <>
+            <StatusBar value="auto" translucent backgroundColor="transparent" />
             <ViewThemed>
                 <FlatList
                     ref={flatListRef}
@@ -148,7 +148,7 @@ const OnBoardingScreen = ({navigation}) => {
                 />
                 <Footer />
             </ViewThemed>
-        </SafeAreaView>
+        </>
     );
 };
 

@@ -1,11 +1,11 @@
 {
   "expo": {
     "scheme": "enetlifev2",
-    "name": "enet_life_v2",
+    "name": "Enet Life",
     "slug": "enet_life_v2",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "version": "1.23.0",
+    "orientation": "default",
+    "icon": "./assets/icon-enet.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -14,15 +14,17 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.enet.life"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.enet_life"
     },
     "web": {
       "favicon": "./assets/favicon.png"

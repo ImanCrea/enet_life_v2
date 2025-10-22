@@ -17,7 +17,7 @@ function HeaderWithBackButton({handleBackRoute, title, backRouteName}) {
             style={
                 Platform.OS === 'ios' ? styles.containerIOS : styles.containerAndroid
             }>
-            <StatusBar value="auto" />
+            <StatusBar value="auto" translucent backgroundColor="transparent" />
             <ImageBackground style={styles.header} source={IMAGES.headerBackground}>
                 <Pressable
                     style={{marginLeft: 10, flexDirection: 'row'} as StyleSheet}
@@ -41,18 +41,18 @@ export default HeaderWithBackButton;
 
 const styles = StyleSheet.create({
     containerIOS: {
-        height: 120,
+        height: 75,
         overflow: 'hidden',
         backgroundColor: COLORS.white,
         marginTop: 0,
-        paddingTop: 35,
+        //paddingTop: 15,
     },
     containerAndroid: {
-        height: 120,
+        height: 75,
         overflow: 'hidden',
         backgroundColor: COLORS.white,
         marginTop: 0,
-        paddingTop: 35,
+        //paddingTop: 15,
     },
     header: {
         flexDirection: 'row',

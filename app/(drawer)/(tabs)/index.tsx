@@ -26,7 +26,7 @@ import AbsenceService from "../../../service/AbsenceService";
 import Loading from "../../../components/ui/Loading";
 import {useRouter} from "expo-router";
 
-const Home = () => {
+const Index = () => {
     const {t} = useTranslation();
     const [date, setDate] = useState(new Date());
     const [nextEvaluationList, setNextEvaluationList] = useState<any>([]);
@@ -342,7 +342,7 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Index;
 
 const styles = StyleSheet.create({
     evaluation: {

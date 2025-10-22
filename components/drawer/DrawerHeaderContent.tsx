@@ -43,7 +43,7 @@ const DrawerHeaderContent = (props) => {
         navigation.dispatch(DrawerActions.closeDrawer());
         dispatch(initializeChildValue());
         dispatch(logoutUser());
-        //dispatch(setOnBoardingStatus());
+        dispatch(setOnBoardingStatus());
     };
 
     useEffect(() => {

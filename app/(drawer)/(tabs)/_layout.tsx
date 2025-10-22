@@ -1,10 +1,11 @@
 import {Tabs} from "expo-router";
-import {useColorScheme, View, Text} from "react-native";
-import {COLORS, IMAGES, ROUTES} from "../../../constants";
+import {useColorScheme} from "react-native";
+import {COLORS, ROUTES} from "../../../constants";
 import {useTranslation} from "react-i18next";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import CustomHeader from "../../../components/ui/CustomHeader";
+import React from "react";
 
 export default function TabsLayout() {
     const colorScheme = useColorScheme();
@@ -19,9 +20,9 @@ export default function TabsLayout() {
                     tabBarInactiveTintColor: theme.tabIconColor,
                     tabBarStyle: {
                         backgroundColor: theme.navBackground,
-                        paddingTop: 5,
-                        paddingBottom: 6,
-                        height: 75,
+                        paddingTop: 2,
+                        paddingBottom: 5,
+                       height: 60,
                     },
                 }}
             >

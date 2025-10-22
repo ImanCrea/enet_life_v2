@@ -41,3 +41,5 @@ yarn-error.*
 /android
 
 api/apiAccessInfo.ts
+android/gradle.properties
+android/app/enet_life_key_store.keystore

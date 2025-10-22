@@ -92,8 +92,6 @@ const MoreLayout = () => {
             />
 
         </Stack>
-
-        /*<Stack />*/
     );
 };
 

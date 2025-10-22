@@ -5,8 +5,9 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import {useNavigation} from "expo-router";
 import { DrawerActions } from '@react-navigation/native';
 import {useSelector} from "react-redux";
-import {JSX} from "react";
+import React, {JSX} from "react";
 import {BASEURL_IMG_STUDENT} from "../../api/appUrl";
+import {StatusBar} from "expo-status-bar";
 
 const CustomHeader = ({ title }) => {
     const colorScheme = useColorScheme();
@@ -26,6 +27,7 @@ const CustomHeader = ({ title }) => {
                 ? [styles.containerIOS, {backgroundColor: theme.background}]
                 : [styles.containerAndroid, {backgroundColor: theme.background}]}
         >
+            <StatusBar value="auto" translucent backgroundColor="transparent" />
             <ImageBackground
                 style={[styles.headerContainer, {backgroundColor: theme.headerBackground}]}
                 source={IMAGES.headerBackground}>
@@ -79,16 +81,16 @@ export default CustomHeader;
 
 const styles = StyleSheet.create({
     containerIOS: {
-        height: 120,
+        height: 75,
         overflow: 'hidden',
         marginTop: 0,
-        paddingTop: 35,
+        //paddingTop: 15,
     },
     containerAndroid: {
-        height: 120,
+        height: 75,
         overflow: 'hidden',
         marginTop: 0,
-        paddingTop: 35,
+        //paddingTop: 15,
     },
     headerContainer: {
         marginTop: 0,
@@ -141,4 +143,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         right: 35,
     },
+    background: {
+
+    }
+
 });

@@ -5,7 +5,7 @@ export default {
     CONFIDENTIAL_POLICY: '/policy',
 
 
-    TAB_HOME: 'home',
+    TAB_HOME: 'index',
     TAB_EVAL: 'eval',
     TAB_TUITION: 'tuition',
     TAB_CALENDAR: 'edt/index',

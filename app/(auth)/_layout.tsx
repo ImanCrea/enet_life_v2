@@ -5,7 +5,7 @@ import React from "react";
 export default function AuthLayout() {
     return (
         <>
-            <StatusBar value="auto" />
+            <StatusBar value="auto" translucent backgroundColor="transparent" />
             <Stack
                 screenOptions={{
                     headerShown: false,
